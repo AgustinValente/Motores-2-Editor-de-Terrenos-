@@ -27,49 +27,50 @@ public class PrefabsEditor : EditorWindow
 
     private void OnGUI()
     {
+        /* EditorGUILayout.LabelField("Select Prefab or a GameObject: ");
+         target = EditorGUILayout.ObjectField(target, typeof(GameObject), true);*/
 
-        target = EditorGUILayout.ObjectField(target, typeof(GameObject), false);
+        EditorGUILayout.LabelField("Select GameObject from the Scene: ");
+        /*   if (target == null)
+           {
+               throw new System.Exception("EDITOR DE PREFABS VACIO. SELECCIONE UN PREFAB");
+           }*/
 
-        EditorGUILayout.LabelField("Select Prefab From List: ");
-        if (target == null)
+
+
+        if (Selection.activeGameObject != null)
         {
-            throw new System.Exception("EDITOR DE PREFABS VACIO. SELECCIONE UN PREFAB");
-        }
-
-
-        if (target != null)
-        {
-               float posX = Selection.activeGameObject.GetComponent<Transform>().transform.position.x;
-               float posY = Selection.activeGameObject.GetComponent<Transform>().transform.position.y;
-               float posZ = Selection.activeGameObject.GetComponent<Transform>().transform.position.z;
+            float posX = Selection.activeGameObject.GetComponent<Transform>().transform.position.x;
+            float posY = Selection.activeGameObject.GetComponent<Transform>().transform.position.y;
+            float posZ = Selection.activeGameObject.GetComponent<Transform>().transform.position.z;
 
 
             posXBool = EditorGUILayout.Toggle("Make to Front", posXBool);
+            {
+                if (posXBool)
                 {
-                    if (posXBool)
-                    {
                     posXboolNegative = false;
-                        posX++;
+                    posX = Selection.activeGameObject.transform.position.x + Selection.activeGameObject.transform.localScale.x;
 
-                    }
-                    
                 }
+
+            }
             posXboolNegative = EditorGUILayout.Toggle("Make to Back", posXboolNegative);
-             {
+            {
                 if (posXboolNegative)
                 {
                     posXBool = false;
-                    posX--;
+                    posX = Selection.activeGameObject.transform.position.x - Selection.activeGameObject.transform.localScale.x;
                 }
 
-             }
+            }
 
             posYBool = EditorGUILayout.Toggle("Make to UP!", posYBool);
             {
                 if (posYBool)
                 {
                     posYboolNegative = false;
-                    posY++;
+                    posY = Selection.activeGameObject.transform.position.y + Selection.activeGameObject.transform.localScale.y;
 
                 }
             }
@@ -78,7 +79,7 @@ public class PrefabsEditor : EditorWindow
                 if (posYboolNegative)
                 {
                     posYBool = false;
-                    posY--;
+                    posY = Selection.activeGameObject.transform.position.y - Selection.activeGameObject.transform.localScale.y;
 
                 }
             }
@@ -88,7 +89,7 @@ public class PrefabsEditor : EditorWindow
                 if (posZBool)
                 {
                     posZboolNegative = false;
-                    posZ++;
+                    posZ = Selection.activeGameObject.transform.position.z + Selection.activeGameObject.transform.localScale.z;
 
                 }
             }
@@ -97,20 +98,22 @@ public class PrefabsEditor : EditorWindow
                 if (posZboolNegative)
                 {
                     posZBool = false;
-                    posZ--;
+                    posZ = Selection.activeGameObject.transform.position.z - Selection.activeGameObject.transform.localScale.z;
 
                 }
             }
 
-            Quaternion rotation = new Quaternion(0f, 0f, 0f,0f);
-                Vector3 position = new Vector3(posX, posY, posZ);
+            Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
+            Vector3 position = new Vector3(posX, posY, posZ);
 
             if (GUILayout.Button("Spawn Prefab"))
             {
 
-                Selection.activeObject = Instantiate(target, position, rotation);
+                Selection.activeObject = Instantiate(Selection.activeGameObject, position, rotation);
 
             }
+
+
 
 
         }
