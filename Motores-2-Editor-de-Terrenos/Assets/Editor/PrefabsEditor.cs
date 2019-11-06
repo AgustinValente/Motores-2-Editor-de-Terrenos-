@@ -16,7 +16,7 @@ public class PrefabsEditor : EditorWindow
     public bool posZboolNegative;
     Editor the;
     public bool lefTerrainPos;
-   
+
 
 
     [MenuItem("Prefab Maker/PrefabEditor")]
@@ -43,7 +43,7 @@ public class PrefabsEditor : EditorWindow
         ShowPreview();
         if (Selection.activeGameObject != null)
         {
-            
+
 
             float posX = Selection.activeGameObject.GetComponent<Transform>().transform.position.x;
             float posY = Selection.activeGameObject.GetComponent<Transform>().transform.position.y;
@@ -126,7 +126,7 @@ public class PrefabsEditor : EditorWindow
 
     private void ShowPreview()
     {
-        
+
         var _selection = Selection.activeGameObject;
         EditorGUILayout.LabelField("Selection preview");
         _selection = (GameObject)EditorGUILayout.ObjectField(_selection, typeof(GameObject), true);
@@ -135,7 +135,7 @@ public class PrefabsEditor : EditorWindow
         myGuiStyle.normal.background = EditorGUIUtility.whiteTexture;
         if (_selection != null)
         {
-            EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(50, 200),AssetPreview.GetAssetPreview(_selection));
+            EditorGUI.DrawPreviewTexture(GUILayoutUtility.GetRect(50, 200), AssetPreview.GetAssetPreview(_selection));
         }
         if (_selection == null)
         {
@@ -158,31 +158,65 @@ public class PrefabsEditor : EditorWindow
 
         Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
         if (target != null)
-        { 
-                if (GUILayout.Button("Reset Position"))
-                {
+        {
+
+            if (GUILayout.Button("Place on Center Up"))
+            {
+                var resetPosX4 = target.transform.position.x;
+                var resetPosY4 = target.transform.position.y + +Selection.activeGameObject.transform.localScale.y;
+                var resetPosZ4 = target.transform.position.z + target.transform.localScale.z / 2;
+
+                Selection.activeGameObject.transform.localPosition = new Vector3(resetPosX4, resetPosY4, resetPosZ4);
+
+            }
+
                 //prueba 
                 var resetPosX = target.transform.position.x;
-                var resetPosY = target.transform.position.y + Selection.activeGameObject.transform.localScale.y;
+            //var resetPosY = target.transform.position.y + target.transform.localScale.y + Selection.activeGameObject.transform.localScale.y;
+                var resetPosY = target.transform.position.y + +Selection.activeGameObject.transform.localScale.y;
                 var resetPosZ = target.transform.position.z;
+
+            if (GUILayout.Button("Place on Center"))
+            {
                 //center object on Terrain
                 Selection.activeGameObject.transform.localPosition = new Vector3(resetPosX, resetPosY, resetPosZ);
 
-
-            /*if (EditorGUILayout.Toggle("Make left of Terrain", lefTerrainPos))
+            }
+            if (GUILayout.Button("Place on Center Down"))
             {
+                var resetPosX3 = target.transform.position.x;
+                var resetPosY3 = target.transform.position.y + +Selection.activeGameObject.transform.localScale.y;
+                var resetPosZ3 = target.transform.position.z - target.transform.localScale.z / 2;
 
-        if (GUILayout.Button("Spawn Prefab on Side/Center"))
+                Selection.activeGameObject.transform.localPosition = new Vector3(resetPosX3, resetPosY3, resetPosZ3);              
+
+            }
+            if (GUILayout.Button("Place on Left Side"))
             {
-            Vector3 position = new Vector3(posX, posY, posZ);
-            posX = target.transform.position.x - target.transform.localScale.x;
-            Selection.activeObject = Instantiate(Selection.activeGameObject, position, rotation);
-            }            
-        }*/
+               var resetPosX2 = (target.transform.position.x - target.transform.localScale.x) / 2;
+               var resetPosY2 = target.transform.position.y + +Selection.activeGameObject.transform.localScale.y;
+               var resetPosZ2 = target.transform.position.z;
+                var position2 = new Vector3(resetPosX2, resetPosY2, resetPosZ2);
+                //center object on Terrain
+                Selection.activeGameObject.transform.position = position2;
+                //Selection.activeGameObject = Instantiate(Selection.activeGameObject, position, rotation);
+
             }
 
-        
+            if (GUILayout.Button("Place on Right Side"))
+            {
+                //prueba 
+                
+                resetPosX = (target.transform.position.x + target.transform.localScale.x) / 2;
+                resetPosY = target.transform.position.y + +Selection.activeGameObject.transform.localScale.y;
+                resetPosZ = target.transform.position.z;
+                var position = new Vector3(resetPosX, resetPosY, resetPosZ);
+                //center object on Terrain
+                Selection.activeGameObject.transform.position = new Vector3(resetPosX, resetPosY, resetPosZ);
+                //Selection.activeGameObject = Instantiate(Selection.activeGameObject, position, rotation);
+
+
+            }
         }
     }
-
 }
