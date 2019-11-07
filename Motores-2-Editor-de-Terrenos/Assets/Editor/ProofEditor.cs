@@ -13,6 +13,7 @@ public class ProofEditor : Editor
     RaycastHit hit;
     private string[] toolbarOptions = new string[] {"Ninguno","Ciculo", "Cuadrado"};
     int _currentToolbarSelection;
+
     private void OnEnable()
     {
         _target = (Proof)target;
@@ -32,25 +33,42 @@ public class ProofEditor : Editor
         _currentToolbarSelection = GUILayout.Toolbar(_currentToolbarSelection, toolbarOptions);
         GUILayout.EndArea();
         Handles.EndGUI();
-        if (_currentToolbarSelection == 1)
+        if (_currentToolbarSelection == 0)
         {
-            SphereHandles();
+            _target._particle.enableEmission = false;
         }
-        if (_currentToolbarSelection == 2)
+        else if (_currentToolbarSelection == 1)
         {
-            QuadHandles();
+            Particleeffect();
+            _target._particle.enableEmission = true;
+            // SphereHandles();
+        }
+        else if (_currentToolbarSelection == 2)
+        {
+            //QuadHandles();
         }
 
     }
 
-    void SphereHandles()
+    void Particleeffect()
+    {
+        mousePosition = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+        _target._particle.transform.localScale = new Vector3(_target.radius, _target.radius, _target.radius);
+        _target._particle.startColor = new Color(1, 0,0,1);
+        if (Physics.Raycast(mousePosition, out hit))
+        {
+            _target._particle.transform.position = hit.point;
+        }
+    }
+
+    /*void SphereHandles()
     {
         mousePosition = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         SceneView.RepaintAll();
         if (Physics.Raycast(mousePosition, out hit))
         {
             Handles.color = new Color(1,0,0, _target.opacity);
-            Handles.DrawSolidDisc(hit.point, -hit.transform.up, _target.radius);
+            Handles.DrawSolidDisc(hit.point, hit.normal, _target.radius);
             HandleUtility.Repaint();
         }
         HandleUtility.Repaint();
@@ -74,6 +92,6 @@ public class ProofEditor : Editor
             HandleUtility.Repaint();
         }
         HandleUtility.Repaint();
-    }
+    }*/
 
 }
