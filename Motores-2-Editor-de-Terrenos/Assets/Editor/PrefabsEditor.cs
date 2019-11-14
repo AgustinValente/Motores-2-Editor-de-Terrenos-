@@ -17,10 +17,19 @@ public class PrefabsEditor : EditorWindow
     Editor the;
     public bool lefTerrainPos;
 
+    public int howManySpawn;
+    public bool goToSpawn;
+    public int RangeInXp;
+    public int RangeInXn;
+    public int RangeInZp;
+    public int RangeInZn;
+
+
     [MenuItem("Prefab Maker/PrefabEditor")]
 
     public static void OpenWindow()
     {
+
         var w = GetWindow<PrefabsEditor>();
         w.Show();
     }
@@ -36,12 +45,16 @@ public class PrefabsEditor : EditorWindow
                throw new System.Exception("EDITOR DE PREFABS VACIO. SELECCIONE UN PREFAB");
            }*/
 
+
         ShowPreview();
         if (Selection.activeGameObject != null)
         {
+
+
             float posX = Selection.activeGameObject.GetComponent<Transform>().transform.position.x;
             float posY = Selection.activeGameObject.GetComponent<Transform>().transform.position.y;
             float posZ = Selection.activeGameObject.GetComponent<Transform>().transform.position.z;
+
 
             posXBool = EditorGUILayout.Toggle("Make to Front", posXBool);
             {
@@ -49,6 +62,7 @@ public class PrefabsEditor : EditorWindow
                 {
                     posXboolNegative = false;
                     posX = Selection.activeGameObject.transform.position.x + Selection.activeGameObject.transform.localScale.x;
+
                 }
 
             }
@@ -59,6 +73,7 @@ public class PrefabsEditor : EditorWindow
                     posXBool = false;
                     posX = Selection.activeGameObject.transform.position.x - Selection.activeGameObject.transform.localScale.x;
                 }
+
             }
 
             posYBool = EditorGUILayout.Toggle("Make to UP!", posYBool);
@@ -67,6 +82,7 @@ public class PrefabsEditor : EditorWindow
                 {
                     posYboolNegative = false;
                     posY = Selection.activeGameObject.transform.position.y + Selection.activeGameObject.transform.localScale.y;
+
                 }
             }
             posYboolNegative = EditorGUILayout.Toggle("Make to Down !", posYboolNegative);
@@ -75,6 +91,7 @@ public class PrefabsEditor : EditorWindow
                 {
                     posYBool = false;
                     posY = Selection.activeGameObject.transform.position.y - Selection.activeGameObject.transform.localScale.y;
+
                 }
             }
 
@@ -84,6 +101,7 @@ public class PrefabsEditor : EditorWindow
                 {
                     posZboolNegative = false;
                     posZ = Selection.activeGameObject.transform.position.z + Selection.activeGameObject.transform.localScale.z;
+
                 }
             }
             posZboolNegative = EditorGUILayout.Toggle("Make to Right >", posZboolNegative);
@@ -92,6 +110,7 @@ public class PrefabsEditor : EditorWindow
                 {
                     posZBool = false;
                     posZ = Selection.activeGameObject.transform.position.z - Selection.activeGameObject.transform.localScale.z;
+
                 }
             }
 
@@ -100,16 +119,43 @@ public class PrefabsEditor : EditorWindow
 
             if (GUILayout.Button("Spawn Prefab"))
             {
+
                 Selection.activeObject = Instantiate(Selection.activeGameObject, position, rotation);
+
             }
+
+
+
+        }
+
+        //float time = 0;
+        //float timer = Time.deltaTime;
+
+        //time += timer;
+        //Debug.Log(time);
+        goToSpawn = EditorGUILayout.Toggle("Make More Prefabs", goToSpawn);
+
+
+        if (goToSpawn)
+        {
+            howManySpawn = EditorGUILayout.IntField("howMany Create", howManySpawn);
+
+            RangeInXn = EditorGUILayout.IntField("Range X(-)", RangeInXn);
+            RangeInXp = EditorGUILayout.IntField("Range X(+)", RangeInXp);
+            RangeInZn = EditorGUILayout.IntField("Range Z(-)", RangeInZn);
+            RangeInZp = EditorGUILayout.IntField("Range Z(+)", RangeInZp);
+            SpawnObjects();
         }
 
         SpawnPosition();
+
+
 
     }
 
     private void ShowPreview()
     {
+
         var _selection = Selection.activeGameObject;
         EditorGUILayout.LabelField("Selection preview");
         _selection = (GameObject)EditorGUILayout.ObjectField(_selection, typeof(GameObject), true);
@@ -126,6 +172,7 @@ public class PrefabsEditor : EditorWindow
 
         }
 
+
     }
 
     public void SpawnPosition()
@@ -141,6 +188,7 @@ public class PrefabsEditor : EditorWindow
         Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
         if (target != null)
         {
+
             if (GUILayout.Button("Place on Center Up"))
             {
                 var resetPosX4 = target.transform.position.x;
@@ -148,6 +196,7 @@ public class PrefabsEditor : EditorWindow
                 var resetPosZ4 = target.transform.position.z + target.transform.localScale.z / 2;
 
                 Selection.activeGameObject.transform.localPosition = new Vector3(resetPosX4, resetPosY4, resetPosZ4);
+
             }
 
             //prueba 
@@ -160,6 +209,7 @@ public class PrefabsEditor : EditorWindow
             {
                 //center object on Terrain
                 Selection.activeGameObject.transform.localPosition = new Vector3(resetPosX, resetPosY, resetPosZ);
+
             }
             if (GUILayout.Button("Place on Center Down"))
             {
@@ -179,6 +229,7 @@ public class PrefabsEditor : EditorWindow
                 //center object on Terrain
                 Selection.activeGameObject.transform.position = position2;
                 //Selection.activeGameObject = Instantiate(Selection.activeGameObject, position, rotation);
+
             }
 
             if (GUILayout.Button("Place on Right Side"))
@@ -192,6 +243,28 @@ public class PrefabsEditor : EditorWindow
                 //center object on Terrain
                 Selection.activeGameObject.transform.position = new Vector3(resetPosX, resetPosY, resetPosZ);
                 //Selection.activeGameObject = Instantiate(Selection.activeGameObject, position, rotation);
+
+            }
+        }
+    }
+
+    public void SpawnObjects()
+
+    {
+        if (GUILayout.Button("Spawn More"))
+        {
+            {
+                if (goToSpawn)
+                {
+                    for (int i = 0; i <= howManySpawn; i++)
+                    {
+                        var randomPositionX = Selection.activeGameObject.transform.position.x + Selection.activeGameObject.transform.localScale.x + Random.Range(RangeInXn, RangeInXp);
+                        var randomPositionY = Selection.activeGameObject.transform.position.y + Random.Range(0, 0);
+                        var randomPositionZ = Selection.activeGameObject.transform.position.z + Selection.activeGameObject.transform.localScale.z + Random.Range(RangeInZn, RangeInZp);
+
+                        Instantiate(Selection.activeGameObject, new Vector3(randomPositionX, randomPositionY, randomPositionZ), Quaternion.identity);
+                    }
+                }
 
             }
         }
