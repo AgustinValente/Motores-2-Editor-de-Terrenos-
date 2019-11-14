@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class UIHandles : EditorWindow
 {
     public NoiseSave load;
-    public Noise noiseScript;
+    public Plane ValueScript;
     private bool isShowing, activar;
     public string nameScript;
 
@@ -38,7 +38,7 @@ public class UIHandles : EditorWindow
 
     private void OnGUI()
     {
-        noiseScript = GameObject.FindObjectOfType<Noise>();
+        ValueScript = GameObject.FindObjectOfType<Plane>();
         
         isShowing = EditorGUILayout.Toggle("Editar Terreno", isShowing);
       
@@ -46,20 +46,20 @@ public class UIHandles : EditorWindow
 
     private void Load()
     {
-        noiseScript.height = load.height;
-        noiseScript.width = load.width;
-        noiseScript.scale = load.scale;
-        noiseScript.offsetx = load.offsetx;
-        noiseScript.offsety = load.offsety;
+        ValueScript.height = load.height;
+        ValueScript.width = load.width;
+        ValueScript.scale = load.scale;
+        ValueScript.offsetx = load.offsetx;
+        ValueScript.offsety = load.offsety;
     }
     private void Save()
     {
         var scriptObj = ScriptableObjectUtillity.CreateAsset<NoiseSave>(nameScript);
-        scriptObj.height = noiseScript.height;
-        scriptObj.width = noiseScript.width;
-        scriptObj.scale = noiseScript.scale;
-        scriptObj.offsetx = noiseScript.offsetx;
-        scriptObj.offsety = noiseScript.offsety;
+        scriptObj.height = ValueScript.height;
+        scriptObj.width = ValueScript.width;
+        scriptObj.scale = ValueScript.scale;
+        scriptObj.offsetx = ValueScript.offsetx;
+        scriptObj.offsety = ValueScript.offsety;
     }
     private void GUISceneShow()
     {

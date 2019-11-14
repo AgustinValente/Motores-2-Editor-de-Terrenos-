@@ -6,7 +6,7 @@ using UnityEditor;
 public class TerrainEditor : EditorWindow
 {
     public NoiseSave load;
-    public Noise noiseScript;
+    public Plane noiseScript;
     private bool isShowing, activar;
     public string nameScript;
     //Shaders
@@ -39,7 +39,7 @@ public class TerrainEditor : EditorWindow
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
-        noiseScript = GameObject.FindObjectOfType<Noise>();
+        noiseScript = GameObject.FindObjectOfType<Plane>();
         isShowing = EditorGUILayout.Toggle("Save Data", isShowing);
         if (isShowing)
             GUISceneShow();
@@ -375,6 +375,7 @@ public class TerrainEditor : EditorWindow
         noiseScript.scale = load.scale;
         noiseScript.offsetx = load.offsetx;
         noiseScript.offsety = load.offsety;
+        
     }
     private void Save()
     {

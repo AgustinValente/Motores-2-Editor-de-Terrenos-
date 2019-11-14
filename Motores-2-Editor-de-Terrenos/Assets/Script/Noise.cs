@@ -5,7 +5,7 @@ using UnityEditor;
 
 [ExecuteInEditMode]
 
-public class Noise : MonoBehaviour
+public class Plane : MonoBehaviour
 {
     
 
