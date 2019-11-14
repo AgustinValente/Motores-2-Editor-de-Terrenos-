@@ -19,26 +19,21 @@ public class UIHandles : EditorWindow
         UIHandles myeditor = (UIHandles)GetWindow(typeof(UIHandles));
         myeditor.Show();
     }
-
     private void OnFocus()
     {
         SceneView.onSceneGUIDelegate -= this.OnSceneGUI;
         SceneView.onSceneGUIDelegate += this.OnSceneGUI;
     }
 
+    
     private void OnSceneGUI(SceneView sceneView)
     {
         if (isShowing)
         {
-            
             SceneView.RepaintAll();
-
             GUISceneShow();
-
-            
-           
-        
         }
+
     }
 
     private void OnGUI()
@@ -46,22 +41,17 @@ public class UIHandles : EditorWindow
         noiseScript = GameObject.FindObjectOfType<Noise>();
         
         isShowing = EditorGUILayout.Toggle("Editar Terreno", isShowing);
-        
-
-        
-
+      
     }
 
     private void Load()
     {
-
         noiseScript.height = load.height;
         noiseScript.width = load.width;
         noiseScript.scale = load.scale;
         noiseScript.offsetx = load.offsetx;
         noiseScript.offsety = load.offsety;
     }
-
     private void Save()
     {
         var scriptObj = ScriptableObjectUtillity.CreateAsset<NoiseSave>(nameScript);
@@ -71,21 +61,18 @@ public class UIHandles : EditorWindow
         scriptObj.offsetx = noiseScript.offsetx;
         scriptObj.offsety = noiseScript.offsety;
     }
-
-    
-
     private void GUISceneShow()
     {
         Handles.BeginGUI();
 
-        var v = EditorWindow.GetWindow<SceneView>().camera.pixelRect;
+       var v = EditorWindow.GetWindow<SceneView>().camera.pixelRect;
         GUILayout.BeginArea(new Rect(20, 20, 250, 300));
         var rec = EditorGUILayout.BeginVertical();
         GUI.color = new Color32(255, 255, 255, 100);
         GUI.Box(rec, GUIContent.none);
         GUI.color = Color.white;
 
-        EditorGUILayout.Space();
+       EditorGUILayout.Space();
         nameScript = EditorGUILayout.TextField("Guardar Como: ", nameScript);
         if (GUILayout.Button("Guardar"))
         {
