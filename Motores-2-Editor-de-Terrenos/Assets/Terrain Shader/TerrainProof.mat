@@ -80,7 +80,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture1:
-        m_Texture: {fileID: 2800000, guid: 08b3639045d966048a1cb779dcc1b69e, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture1Normal:
@@ -88,7 +88,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2:
-        m_Texture: {fileID: 2800000, guid: f061199b2c8ab6343ba8fc67e341047b, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2Normal:
@@ -96,7 +96,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture3:
-        m_Texture: {fileID: 2800000, guid: 322392db0ff7b7047a312daabfc68609, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture3Normal:
@@ -159,6 +159,10 @@ Material:
     - _TileTexture2: 1
     - _TileTexture3: 1
     - _TileTexture4: 1
+    - _Tilling1: 1
+    - _Tilling2: 1
+    - _Tilling3: 1
+    - _Tilling4: 3.49
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0

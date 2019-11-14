@@ -11,6 +11,7 @@ public class TerrainEditor : EditorWindow
     public string nameScript;
     //Shaders
     Material _material;
+
     bool _seePreview1, _seePreview2, _seePreview3, _seePreview4;
     Texture2D texture1, texture2, texture3, texture4;
     private Texture2D _preview, _preview2, _preview3, _preview4;
@@ -18,6 +19,10 @@ public class TerrainEditor : EditorWindow
     Texture2D normal1, normal2, normal3, normal4;
     bool _seeNormal1, _seeNormal2, _seeNormal3, _seeNormal4;
     private Texture2D _Normalpreview, _Normalpreview2, _Normalpreview3, _Normalpreview4;
+
+    float tilling1, tilling2, tilling3, tilling4;
+
+    private Vector2 _scrollPosition;
 
     [MenuItem("Custom Window/Terrain Editor")]
     private static void OnEnable()
@@ -28,20 +33,26 @@ public class TerrainEditor : EditorWindow
 
     private void OnGUI()
     {
+        _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, false, true);
         Shader();
+
         EditorGUILayout.Space();
         EditorGUILayout.Space();
+
         noiseScript = GameObject.FindObjectOfType<Noise>();
         isShowing = EditorGUILayout.Toggle("Save Data", isShowing);
         if (isShowing)
             GUISceneShow();
+
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
         if (GUILayout.Button("Object Editor"))
             PrefabsEditor.OpenWindow();
+        EditorGUILayout.EndScrollView();
+        EditorGUILayout.EndScrollView();
 
-       
+
     }
 
     void Shader()
@@ -49,7 +60,8 @@ public class TerrainEditor : EditorWindow
         EditorGUILayout.LabelField("Material :");
         //Material _material = (Material)Resources.Load("TerrainProof", typeof(Material));
         _material = (Material)EditorGUILayout.ObjectField(_material, typeof(Material),false);
-        if(_material != null)
+        EditorGUILayout.HelpBox("Usar el material TerrainProof", MessageType.Info);
+        if (_material != null)
         {
             EditorGUILayout.Space();
             Texture1();
@@ -89,12 +101,16 @@ public class TerrainEditor : EditorWindow
 
         GUILayout.EndVertical();
         GUILayout.EndHorizontal();
+
         GUILayout.BeginHorizontal();
 
         _seePreview1 = EditorGUILayout.Toggle("See Preview:", _seePreview1);
         _seeNormal1 = EditorGUILayout.Toggle("Use Normal:", _seeNormal1);
 
         GUILayout.EndHorizontal();
+
+        tilling1 = EditorGUILayout.Slider(tilling1, 1, 10);
+        _material.SetFloat("_Tilling1", tilling1);
 
         if (_seePreview1)
             Preview1();
@@ -158,12 +174,16 @@ public class TerrainEditor : EditorWindow
 
         GUILayout.EndVertical();
         GUILayout.EndHorizontal();
+
         GUILayout.BeginHorizontal();
 
         _seePreview2 = EditorGUILayout.Toggle("See Preview:", _seePreview2);
         _seeNormal2 = EditorGUILayout.Toggle("Use Normal:", _seeNormal2);
 
         GUILayout.EndHorizontal();
+
+        tilling2 = EditorGUILayout.Slider(tilling2, 1, 10);
+        _material.SetFloat("_Tilling2", tilling2);
 
         if (_seePreview2)
             Preview2();
@@ -227,12 +247,16 @@ public class TerrainEditor : EditorWindow
 
         GUILayout.EndVertical();
         GUILayout.EndHorizontal();
+
         GUILayout.BeginHorizontal();
 
         _seePreview3 = EditorGUILayout.Toggle("See Preview:", _seePreview3);
         _seeNormal3 = EditorGUILayout.Toggle("Use Normal:", _seeNormal3);
 
         GUILayout.EndHorizontal();
+
+        tilling3 = EditorGUILayout.Slider(tilling3, 1, 10);
+        _material.SetFloat("_Tilling3", tilling3);
 
         if (_seePreview3)
             Preview3();
@@ -295,12 +319,16 @@ public class TerrainEditor : EditorWindow
 
         GUILayout.EndVertical();
         GUILayout.EndHorizontal();
+
         GUILayout.BeginHorizontal();
 
         _seePreview4 = EditorGUILayout.Toggle("See Preview:", _seePreview4);
         _seeNormal4 = EditorGUILayout.Toggle("Use Normal:", _seeNormal4);
 
         GUILayout.EndHorizontal();
+
+        tilling4 = EditorGUILayout.Slider(tilling4, 1, 10);
+        _material.SetFloat("_Tilling4", tilling4);
 
         if (_seePreview4)
             Preview4();
