@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
 public class TerrainEditor : EditorWindow
 {
     public NoiseSave load;
     public Plane noiseScript;
     private bool isShowing, activar;
     public string nameScript;
+
     //Shaders
     Material _material;
 
@@ -24,6 +24,12 @@ public class TerrainEditor : EditorWindow
 
     private Vector2 _scrollPosition;
 
+    //Objects
+    GameObject _object;
+    Ray mousePosition;
+    RaycastHit hit;
+
+    [ExecuteAlways]
     [MenuItem("Custom Window/Terrain Editor")]
     private static void OnEnable()
     {
@@ -49,12 +55,20 @@ public class TerrainEditor : EditorWindow
 
         if (GUILayout.Button("Object Editor"))
             PrefabsEditor.OpenWindow();
+
+       // GameObjectSpawn();
+
         EditorGUILayout.EndScrollView();
-        EditorGUILayout.EndScrollView();
+       
 
 
     }
 
+  /*  private void OnSceneGUI()
+    {
+         mousePosition = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+    }*/
+  
     void Shader()
     {
         EditorGUILayout.LabelField("Material :");
@@ -367,6 +381,25 @@ public class TerrainEditor : EditorWindow
 
         GUILayout.EndHorizontal();
     }
+
+  /*  void GameObjectSpawn()
+    {
+        EditorGUILayout.LabelField("Asset :");
+        _object = (GameObject)EditorGUILayout.ObjectField(_object, typeof(GameObject), true);
+        activar = EditorGUILayout.Toggle("Put Asset", activar);
+        if (activar)
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                var spawn = Instantiate(_object);
+                spawn.transform.position = hit.point;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            activar = false;
+        }
+    }*/
 
     private void Load()
     {

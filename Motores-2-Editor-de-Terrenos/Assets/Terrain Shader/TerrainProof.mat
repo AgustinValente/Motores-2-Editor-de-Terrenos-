@@ -104,7 +104,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture4:
-        m_Texture: {fileID: 2800000, guid: 09ab5acea4ba25a4c83e523bc44ea7d8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 322392db0ff7b7047a312daabfc68609, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture4Normal:
@@ -162,7 +162,7 @@ Material:
     - _Tilling1: 1
     - _Tilling2: 1
     - _Tilling3: 1
-    - _Tilling4: 3.49
+    - _Tilling4: 1
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0
